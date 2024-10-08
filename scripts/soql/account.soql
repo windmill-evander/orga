@@ -1,3 +1,2 @@
 SELECT Id, Name
-FROM Product2
-WHERE Id='01tQy00000AEH3WIAX'
+FROM DeletedProduct__c

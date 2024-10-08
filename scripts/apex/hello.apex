@@ -1,19 +1,16 @@
-String cronExpression = '0 12 * * * ?'; // Every minute at 0 seconds
-String jobName = 'ProductSyncJob';
+// String cronExpression = '0 12 * * * ?'; // Every minute at 0 seconds
+// String jobName = 'ProductSyncJob';
 
-ScheduledProductSync job = new ScheduledProductSync();
-System.schedule(jobName, cronExpression, job);
+// ScheduledProductSync job = new ScheduledProductSync();
+// System.schedule(jobName, cronExpression, job);
 
-// Apex code to update all Product2 records' Stock__c field to 2
-// List<Product2> productsToUpdate = [SELECT Id, Stock__c FROM Product2];
+        try {
+            // Query for the deleted product using ALL ROWS to include deleted records
+            List<Product2> deletedProducts = [SELECT Id, Name FROM Product2 WHERE IsDeleted = true ALL ROWS];
+            System.debug(deletedProducts.size());
+            // Perform the undelete operation
+            undelete deletedProducts;
 
-// for (Product2 product : productsToUpdate) {
-//     product.Stock__c = 2; // Set Stock__c to 2
-// }
-
-// try {
-//     update productsToUpdate; // Perform the update
-//     System.debug('Successfully updated Stock__c for all Product2 records to 2.');
-// } catch (DmlException e) {
-//     System.debug('Error occurred while updating Product2 records: ' + e.getMessage());
-// }
+        } catch (Exception e) {
+            System.debug('Error undeleting product: ' + e.getMessage());
+        }
