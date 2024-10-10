@@ -1,7 +1,8 @@
 /****************************************************************************************   
-* File Name   : ScheduledProductSync.cls
-* Description : 주기적 Sync Product를 위한 Schedulable 구현체
-* Test Class  : ScheduledProductSync_Test.cls
+* File Name   : SyncProductCalloutJob.cls
+* Description : Product Sync 요청에 다시 callout하기 위한 Queueable 구현체
+*               Schedulable 구현체에 들어가는 future 메소드도 공통 관리
+* Test Class  : SyncProductCalloutJob_Test.cls
 * Author      : Evander  
 * Modification Log  
 * ===============================================================  
@@ -12,9 +13,13 @@
 * TODO  
 * 테스트 작성  
 ****************************************************************************************/ 
-public with sharing class ScheduledProductSync implements Schedulable {
-    public void execute(SchedulableContext sc) {
-        // future, static
-        // SyncProductCalloutJob.executeFuture();
+public class SyncProductCalloutJob implements Queueable, Database.AllowsCallouts {
+    public void execute(QueueableContext context) {
+        // ProductProcessor.postUpdatedProducts();
     }
+
+    // @future(callout=true)
+    // public static void executeFuture() {
+    //     ProductProcessor.postUpdatedProducts();
+    // }
 }
